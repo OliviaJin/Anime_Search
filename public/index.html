@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Search</title>
+    <style>
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 300px; /* Adjust width as needed */
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50; /* Change border color on focus */
+            outline: none; /* Remove default focus outline */
+        }
+        /* Button Styling */
+        button {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 10px 20px; /* Some padding */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer/hand icon */
+            font-size: 16px; /* Larger font size */
+        }
+
+        button:hover {
+            background-color: #45a049; /* Darker shade of green */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Anime Search</h1>
+    <input type="text" id="animeName" placeholder="Enter Anime Name">
+    <button onclick="searchAnime()">Search</button>
+    <div id="animeData"></div>
+
+    <script>
+      function searchAnime() {
+        const animeName = document.getElementById('animeName').value;
+        fetch(`/search-anime?name=${encodeURIComponent(animeName)}`)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('animeData').innerHTML = `
+              <h2>${data.title}</h2>
+              <img src="${data.picture}" alt="${data.title}">
+              <p>${data.synopsis}</p>
+              // ... display other details
+            `;
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    </script>
+</body>
+</html>
