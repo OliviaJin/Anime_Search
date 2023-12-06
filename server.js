@@ -4,7 +4,8 @@ const app = express();
 const port = 3000;
 
 app.use(express.static('public')); // to serve static files
-
+const cors = require("cors");
+app.use(cors());
 app.get('/search-anime', async (req, res) => {
   try {
     const animeName = req.query.name;
